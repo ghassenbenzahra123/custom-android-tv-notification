@@ -15,9 +15,4 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.example.notification_overlay
-        pluginClass: NotificationOverlayPlugin
+
