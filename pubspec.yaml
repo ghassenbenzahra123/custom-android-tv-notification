@@ -1,7 +1,7 @@
-name: notification_overlay
-description: A custom Android TV notification overlay package.
+name: custom_android_tv_notification
+description: A custom notification overlay for Android TV
 version: 0.0.1
-homepage: https://github.com/yourusername/notification_overlay
+homepage: https://github.com/ghassenbenzahra123/custom-android-tv-notification
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
