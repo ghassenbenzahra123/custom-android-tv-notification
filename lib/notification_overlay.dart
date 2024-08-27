@@ -4,23 +4,28 @@ import 'package:flutter/services.dart';
 class NotificationOverlay {
   static const MethodChannel _channel = MethodChannel('notification_overlay');
 
-  static Future<void> showNotification(
+  static Future<bool> checkOverlayPermission() async {
+    final bool hasPermission =
+        await _channel.invokeMethod('checkOverlayPermission');
+    return hasPermission;
+  }
+
+  static Future<bool> requestOverlayPermission() async {
+    final bool granted =
+        await _channel.invokeMethod('requestOverlayPermission');
+    return granted;
+  }
+
+  static Future<bool> showNotification(
       String message, String imageResName) async {
-    try {
-      await _channel.invokeMethod('showNotification', {
-        'message': message,
-        'imageResName': imageResName,
-      });
-    } catch (e) {
-      print('Error showing notification: $e');
-    }
+    final bool result = await _channel.invokeMethod('showNotification', {
+      'message': message,
+      'imageResName': imageResName,
+    });
+    return result;
   }
 
   static Future<void> hideNotification() async {
-    try {
-      await _channel.invokeMethod('hideNotification');
-    } catch (e) {
-      print('Error hiding notification: $e');
-    }
+    await _channel.invokeMethod('hideNotification');
   }
 }
