@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:custom_android_tv_notification/notification_overlay.dart';
+import 'package:notification_overlay/notification_overlay.dart';
 
 void main() {
   runApp(MyApp());
