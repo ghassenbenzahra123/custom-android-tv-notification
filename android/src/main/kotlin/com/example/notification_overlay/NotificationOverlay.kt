@@ -68,7 +68,7 @@ class NotificationOverlay(private val context: Context) {
                     marginEnd = dpToPx(16)
                     gravity = Gravity.CENTER_VERTICAL
                 }
-                setImageResource(R.drawable.mawaqit_logo.png)
+                setImageResource(R.drawable.mawaqit_logo)
             }
             contentLayout.addView(imageView)
 
