@@ -22,7 +22,7 @@ class NotificationOverlay(private val context: Context) {
     private lateinit var imageView: ImageView
     private val handler = Handler(Looper.getMainLooper())
 
-    fun show(message: String, imageResId: Int) {
+    fun show(message: String) {
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
