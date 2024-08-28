@@ -13,10 +13,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.os.Handler
 import android.os.Looper
+import androidx.cardview.widget.CardView
+import android.util.TypedValue
 
 class NotificationOverlay(private val context: Context) {
 
-      private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private lateinit var layout: View
     private lateinit var textView: TextView
     private lateinit var imageView: ImageView
@@ -36,49 +38,68 @@ class NotificationOverlay(private val context: Context) {
             PixelFormat.TRANSLUCENT
         ).apply {
             gravity = Gravity.TOP or Gravity.END
-            x = 0
-            y = 100
+            x = dpToPx(16)
+            y = dpToPx(32)
         }
 
         layout = createNotificationLayout()
         textView.text = message
-        imageView.setImageResource(R.drawable.mawaqit_logo)
+
         windowManager.addView(layout, params)
 
-        // Schedule the notification to disappear after 10 seconds
         handler.postDelayed({
             hide()
-        }, 10000) // 10000 milliseconds = 10 seconds
+        }, 10000)
     }
 
     private fun createNotificationLayout(): View {
-        return LinearLayout(context).apply {
-            orientation = LinearLayout.HORIZONTAL
-            setBackgroundColor(Color.parseColor("#80000000"))
-            setPadding(16, 16, 16, 16)
+        return CardView(context).apply {
+            radius = dpToPx(16).toFloat()
+            cardElevation = dpToPx(4).toFloat()
+            setCardBackgroundColor(Color.parseColor("#FF424242"))
+            
+            val contentLayout = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                setPadding(dpToPx(16), dpToPx(12), dpToPx(16), dpToPx(12))
+            }
 
             imageView = ImageView(context).apply {
-                layoutParams = LinearLayout.LayoutParams(144, 144).apply {
-                    marginEnd = 16
+                layoutParams = LinearLayout.LayoutParams(dpToPx(40), dpToPx(40)).apply {
+                    marginEnd = dpToPx(16)
+                    gravity = Gravity.CENTER_VERTICAL
                 }
+                setImageResource(R.drawable.mawaqit_logo.png)
             }
-            addView(imageView)
+            contentLayout.addView(imageView)
 
             textView = TextView(context).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
-                )
+                ).apply {
+                    gravity = Gravity.CENTER_VERTICAL
+                }
                 setTextColor(Color.WHITE)
                 textSize = 16f
+                maxWidth = dpToPx(240)
             }
-            addView(textView)
+            contentLayout.addView(textView)
+
+            addView(contentLayout)
         }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp.toFloat(),
+            context.resources.displayMetrics
+        ).toInt()
     }
 
     fun hide() {
         if (::layout.isInitialized) {
-            handler.removeCallbacksAndMessages(null) // Remove any pending hide operations
+            handler.removeCallbacksAndMessages(null)
             windowManager.removeView(layout)
         }
     }
