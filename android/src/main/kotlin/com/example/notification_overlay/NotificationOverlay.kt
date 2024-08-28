@@ -42,7 +42,7 @@ class NotificationOverlay(private val context: Context) {
 
         layout = createNotificationLayout()
         textView.text = message
-        imageView.setImageResource(R.drawable.mawaqitLogo)
+        imageView.setImageResource(R.drawable.mawaqit_logo)
         windowManager.addView(layout, params)
 
         // Schedule the notification to disappear after 10 seconds
