@@ -16,11 +16,9 @@ class NotificationOverlay {
     return granted;
   }
 
-  static Future<bool> showNotification(
-      String message, String imageResName) async {
+  static Future<bool> showNotification(String message) async {
     final bool result = await _channel.invokeMethod('showNotification', {
       'message': message,
-      'imageResName': imageResName,
     });
     return result;
   }

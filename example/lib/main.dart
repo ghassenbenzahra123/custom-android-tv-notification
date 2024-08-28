@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   NotificationOverlay.showNotification(
-                    'This is a test notification',
-                    'ic_notification',
+                      'This is a test notification'
                   );
                 },
                 child: Text('Show Notification'),

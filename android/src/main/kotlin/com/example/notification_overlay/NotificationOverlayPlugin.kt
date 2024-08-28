@@ -43,12 +43,10 @@ class NotificationOverlayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware
                     requestOverlayPermission()
                 }
             }
-            "showNotification" -> {
+   "showNotification" -> {
                 if (checkOverlayPermission()) {
                     val message = call.argument<String>("message") ?: ""
-                    val imageResName = call.argument<String>("imageResName") ?: ""
-                    val imageResId = context.resources.getIdentifier(imageResName, "drawable", context.packageName)
-                    notificationOverlay.show(message, imageResId)
+                    notificationOverlay.show(message)
                     result.success(true)
                 } else {
                     result.error("PERMISSION_DENIED", "Overlay permission not granted", null)

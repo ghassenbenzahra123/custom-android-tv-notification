@@ -21,3 +21,5 @@ flutter:
       android:
         package: com.example.notification_overlay
         pluginClass: NotificationOverlayPlugin
+  assets:
+    - assets/mawaqitLogo.png
