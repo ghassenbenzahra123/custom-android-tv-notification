@@ -43,15 +43,15 @@ class NotificationOverlayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware
                     requestOverlayPermission()
                 }
             }
-   "showNotification" -> {
+      "showNotification" -> {
                 if (checkOverlayPermission()) {
                     val message = call.argument<String>("message") ?: ""
-                    notificationOverlay.show(message)
+                    val durationMillis = call.argument<Long>("durationMillis") ?: 10000
+                    notificationOverlay.show(message, durationMillis)
                     result.success(true)
                 } else {
                     result.error("PERMISSION_DENIED", "Overlay permission not granted", null)
                 }
-            }
             "hideNotification" -> {
                 notificationOverlay.hide()
                 result.success(null)

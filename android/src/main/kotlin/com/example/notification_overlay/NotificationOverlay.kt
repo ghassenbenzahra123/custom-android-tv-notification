@@ -24,7 +24,7 @@ class NotificationOverlay(private val context: Context) {
     private lateinit var imageView: ImageView
     private val handler = Handler(Looper.getMainLooper())
 
-    fun show(message: String) {
+    fun show(message: String, durationMillis: Long = 10000) {
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -49,7 +49,7 @@ class NotificationOverlay(private val context: Context) {
 
         handler.postDelayed({
             hide()
-        }, 10000)
+        }, durationMillis)
     }
 
     private fun createNotificationLayout(): View {
