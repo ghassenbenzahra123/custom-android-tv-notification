@@ -1,3 +1,4 @@
+export 'notification_overlay.dart';
 import 'package:flutter/services.dart';
 
 class NotificationOverlay {
@@ -15,11 +16,9 @@ class NotificationOverlay {
     return granted;
   }
 
-  static Future<bool> showNotification(String message,
-      {int durationMillis = 10000}) async {
+  static Future<bool> showNotification(String message) async {
     final bool result = await _channel.invokeMethod('showNotification', {
       'message': message,
-      'durationMillis': durationMillis,
     });
     return result;
   }
