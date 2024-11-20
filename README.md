@@ -1,39 +1,103 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Custom AndroidTV Notification 
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A Flutter package that provides a simple way to display overlay notifications on top of your app, even when it's in the background.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Show overlay notifications on top of any app
+- Hide notifications programmatically
+- Permission handling for overlay display
+- Works in both foreground and background
 
-## Getting started
+## Getting Started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add this to your package's `pubspec.yaml` file:
 
-## Usage
+```yaml
+dependencies:
+  notification_overlay: ^1.0.0
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+  ```
 
-```dart
-const like = 'sample';
+ ## Usage
+
+```
+import 'package:notification_overlay/notification_overlay.dart'
 ```
 
-## Additional information
+## Check and Request Permission
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Before showing notifications, check and request overlay permission:
+
+```
+bool hasPermission = await NotificationOverlay.checkOverlayPermission();
+
+// Request permission if needed
+if (!hasPermission) {
+  bool granted = await NotificationOverlay.requestOverlayPermission();
+}
+```
+## Show and Hide Notifications
+
+```
+// Show a notification
+await NotificationOverlay.showNotification('Hello World!');
+
+// Hide the notification
+await NotificationOverlay.hideNotification();
+
+```
+
+## Complete Example
+
+```
+import 'package:flutter/material.dart';
+import 'package:notification_overlay/notification_overlay.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Notification Overlay Example'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  NotificationOverlay.showNotification('This is a test notification');
+                },
+                child: Text('Show Notification'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  NotificationOverlay.hideNotification();
+                },
+                child: Text('Hide Notification'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+## Additional Information
+
+### Android Setup
+Add the following permission to your AndroidManifest.xml:
+
+```
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+```
+
+
